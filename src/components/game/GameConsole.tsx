@@ -5,6 +5,7 @@ import Image from 'next/image';
 import {useState, type ReactNode} from 'react';
 import {useTranslations} from 'next-intl';
 import {cx} from '@/lib/styles';
+import {Icon} from '@/components/Icon';
 
 const SnakeGame = dynamic(() => import('./SnakeGame'), {ssr: false, loading: () => <GameLoading />});
 
@@ -19,7 +20,7 @@ export function GameConsole({portraitAlt, caption}: {portraitAlt: string; captio
 
   return (
     <div className={cx('console')} data-console>
-      <div className={cx('console-top mono')}><span>SS—01 / PLAYER ONE</span><span className={cx('screw')} aria-hidden="true">−</span></div>
+      <div className={cx('console-top mono')}><span>SS—01 / PLAYER ONE</span><span className={cx('screw')} aria-hidden="true"><Icon name="minus" /></span></div>
       <div className={cx('portrait-screen')}>
         <div className={cx('portrait-view')} hidden={open}>
           <Image className={cx('portrait')} src="/images/portrait.png" alt={portraitAlt}
@@ -36,9 +37,9 @@ export function GameConsole({portraitAlt, caption}: {portraitAlt: string; captio
       <div className={cx('console-bottom')}>
         <span className={cx('speaker')} aria-hidden="true" />
         <div className={cx('play-label')}><strong>{t(open ? 'openCopy' : 'playCopy')}</strong>
-          <small>{t(open ? 'openSub' : 'playSub')}</small></div>
+          <small>{t(open ? 'openSub' : 'playSub')}{open && <> <Icon name="arrow-right" /></>}</small></div>
         <button type="button" className={cx('play')} aria-label={t(open ? 'close' : 'open')}
-          aria-expanded={open} onClick={() => setOpen(!open)}>{open ? '×' : '▶'}</button>
+          aria-expanded={open} onClick={() => setOpen(!open)}><Icon name={open ? 'x' : 'play'} /></button>
       </div>
     </div>
   )

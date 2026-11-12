@@ -3,6 +3,7 @@
 import {useEffect, useState} from 'react';
 import {useTranslations} from 'next-intl';
 import {cx} from '@/lib/styles';
+import {Icon} from '@/components/Icon';
 
 export function MotionToggle() {
   const t = useTranslations('motion');
@@ -32,7 +33,7 @@ export function MotionToggle() {
         try {localStorage.setItem('portfolio-motion', next ? 'off' : 'on');} catch {}
       }}
     >
-      <span aria-hidden="true">{off ? '▶' : 'Ⅱ'}</span>{t(off ? 'resume' : 'pause')}
+      <Icon name={off ? 'play' : 'pause'} />{t(off ? 'resume' : 'pause')}
     </button>
   )
 }

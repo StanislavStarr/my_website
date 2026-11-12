@@ -2,6 +2,7 @@
 
 import {useState, type CSSProperties, type FormEvent} from 'react';
 import {cx} from '@/lib/styles';
+import {Icon} from '@/components/Icon';
 
 type Props = {
   locale: string; telegram: string;
@@ -60,11 +61,11 @@ export function Brief({locale, telegram, labels}: Props) {
       <div className={cx('brief-actions')}>
         <a className={cx('pill solid')} data-pill data-magnetic data-contact="telegram" href={tgHref}
           target="_blank" rel="noopener noreferrer">
-          <span className={cx('label')} data-magnetic-label>{labels.tg}</span><span aria-hidden="true">↗</span>
+          <span className={cx('label')} data-magnetic-label>{labels.tg}</span><Icon name="arrow-up-right" />
         </a>
         <button type="submit" className={cx('pill')} data-pill data-magnetic data-contact="email"
           disabled={status === 'sending'}>
-          <span className={cx('label')} data-magnetic-label>{labels.mail}</span><span aria-hidden="true">↗</span>
+          <span className={cx('label')} data-magnetic-label>{labels.mail}</span><Icon name="arrow-up-right" />
         </button>
       </div>
       <p className={cx('brief-note mono')} role="status" aria-live="polite" data-state={status}>{note}</p>

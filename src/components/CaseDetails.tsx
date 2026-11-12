@@ -3,6 +3,7 @@ import {getTranslations} from 'next-intl/server';
 import {cx} from '@/lib/styles';
 import {localizedPath, type Locale} from '@/lib/paths';
 import type {Project} from '@/lib/projects';
+import {Icon} from '@/components/Icon';
 
 export async function CaseDetails({project, locale, modal = false}: {
   project: Project; locale: Locale; modal?: boolean;
@@ -16,7 +17,7 @@ export async function CaseDetails({project, locale, modal = false}: {
     <div className={cx('case-shell')}>
       <div className={cx('case-top')}>
         <span className={cx('mono muted')}>{copy.role}</span>
-        {modal ? <button type="button" className={cx('close')} aria-label={t('closeCase')} data-close-dialog>×</button>
+        {modal ? <button type="button" className={cx('close')} aria-label={t('closeCase')} data-close-dialog><Icon name="x" /></button>
           : <Link href={localizedPath(locale) + '#work'} className={cx('case-back')}>← {t('backWork')}</Link>}
       </div>
 
@@ -29,10 +30,10 @@ export async function CaseDetails({project, locale, modal = false}: {
 
       <div className={cx('case-links')}>
         {project.url && <a className={cx('pill solid')} data-pill href={project.url} target="_blank" rel="noopener noreferrer">
-          <span>{t('visitProduct')}</span><span aria-hidden="true">↗</span>
+          <span>{t('visitProduct')}</span><Icon name="arrow-up-right" />
         </a>}
         <Link className={cx('pill')} data-pill href={localizedPath(locale) + '#contact'} replace={modal}>
-          <span>{t('similar')}</span><span aria-hidden="true">↗</span>
+          <span>{t('similar')}</span><Icon name="arrow-up-right" />
         </Link>
       </div>
       

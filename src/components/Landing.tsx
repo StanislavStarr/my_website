@@ -10,6 +10,7 @@ import {projects} from '@/lib/projects';
 import {cx, rv} from '@/lib/styles';
 import {localizedPath, type Locale} from '@/lib/paths';
 import {site} from '@/lib/site';
+import {Icon} from '@/components/Icon';
 
 export async function Landing({locale}: {locale: Locale}) {
   const t = await getTranslations({locale});
@@ -42,9 +43,9 @@ export async function Landing({locale}: {locale: Locale}) {
               <p className={cx('intro')}>{t('intro')}</p>
               <div className={cx('hero-actions')}>
                 <a className={cx('pill solid')} data-pill href="#contact" data-magnetic>
-                  <span className={cx('label')} data-magnetic-label>{t('talk')}</span><span aria-hidden="true">↗</span>
+                  <span className={cx('label')} data-magnetic-label>{t('talk')}</span><Icon name="arrow-up-right" />
                 </a>
-                <a className={cx('text-link')} href="#work">{t('seeWork')}</a>
+                <a className={cx('text-link')} href="#work">{t('seeWork')} <Icon name="arrow-down" /></a>
               </div>
               <div className={cx('hero-foot mono')}>
                 <span>{t('experience')}</span><span className={cx('rule')} /><span>{t('direct')}</span>
@@ -58,7 +59,7 @@ export async function Landing({locale}: {locale: Locale}) {
 
       <div className={cx('marquee-shell')} aria-hidden="true">
         <div className={cx('marquee')} data-marquee>
-          {[0, 1].map((n) => <span key={n}>IDEAS INTO PRODUCTS <b>✳</b> DESIGN INTO CODE <b>✳</b></span>)}
+          {[0, 1].map((n) => <span key={n}>IDEAS INTO PRODUCTS <b><Icon name="asterisk" /></b> DESIGN INTO CODE <b><Icon name="asterisk" /></b></span>)}
         </div>
       </div>
 
@@ -77,7 +78,7 @@ export async function Landing({locale}: {locale: Locale}) {
           </div>
 
           <div className={cx('work-screen')}>
-            <div className={cx('screen-label mono')}><span>{t('workTable')}</span><span>{t('selectCase')}</span></div>
+            <div className={cx('screen-label mono')}><span>{t('workTable')}</span><span>{t('selectCase')} <Icon name="arrow-down-left" /></span></div>
             {projects.map((project, index) => {
               const copy = project[locale];
               const [role, ...domain] = copy.listRole.split(' / ');
@@ -86,7 +87,7 @@ export async function Landing({locale}: {locale: Locale}) {
                 <span className={cx('mono')}>{String(index + 1).padStart(2, '0')}</span>
                 <span><span className={cx('work-title')}>{copy.title}</span><span className={cx('work-desc')}>{copy.short}</span></span>
                 <span className={cx('work-role mono')}>{role}<br />{domain.join(' / ')}</span>
-                <span className={cx('round-arrow')} aria-hidden="true">↗</span>
+                <span className={cx('round-arrow')} aria-hidden="true"><Icon name="arrow-up-right" /></span>
               </Link>;
             })}
             <p className={cx('work-note mono')}>{t('workNote')}</p>

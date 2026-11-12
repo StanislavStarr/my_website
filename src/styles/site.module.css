@@ -828,3 +828,6 @@ font:12px Courier New,monospace}
 .snake-start button{padding:13px 26px;border:1px solid #0c0d09;border-radius:99px;background:#0c0d09;color:#9aa986;font:12px 'Courier New',monospace;touch-action:manipulation}
 .snake-start p{font:11px/1.35 'Courier New',monospace;margin-top:16px;max-width:240px}
 .snake-end{font:25px 'Courier New',monospace;display:block;margin-bottom:18px}
+.marquee b svg{width:1em;height:1em;vertical-align:-.1em!important}
+.screw svg{width:10px;height:10px;vertical-align:0}
+.pill svg{margin-right:-4px}
