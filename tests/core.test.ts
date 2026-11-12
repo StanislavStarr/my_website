@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {localizedPath, unlocalizedPath} from '../src/lib/paths.ts';
 import {getSiteOrigin, canIndex, pageMetadata} from '../src/lib/seo.ts';
-import {createRound, stepRound, eggPosition, TRAVEL_MS, ROUND_MS} from '../src/components/game/engine.ts';
+import {createGame, step, turn, COLS, ROWS} from '../src/components/game/engine.ts';
 
 test('language routing preserves the current case and keeps EN unprefixed', () => {
   assert.equal(localizedPath('en'), '/');
@@ -38,29 +38,38 @@ test('canonical and hreflang point to equivalent case pages', () => {
   assert.deepEqual(metadata.robots, {index: true, follow: true});
 });
 
-test('game catches an egg only in the selected lane', () => {
-  const game = {...createRound('running'), nextSpawn: Infinity,
-    eggs: [{id: 1, lane: 0 as const, age: TRAVEL_MS - 20}]};
-  assert.equal(stepRound(game, 20).score, 1);
-  const missed = stepRound({...game, lane: 1}, 20);
-  assert.equal(missed.score, 0);
-  assert.equal(missed.misses, 1);
-  assert.equal(game.eggs.length, 1, 'input state is not mutated');
+test('snake moves, grows on food and never spawns food on its body', () => {
+  const game = createGame('running', () => 0);
+  const head = game.snake[0];
+  const moved = step(game);
+  assert.deepEqual(moved.snake[0], {x: head.x + 1, y: head.y});
+  assert.equal(moved.snake.length, 3);
+  const fed = step({...game, food: {x: head.x + 1, y: head.y}}, () => 0);
+  assert.equal(fed.snake.length, 4);
+  assert.equal(fed.score, 1);
+  assert.ok(!fed.snake.some((s) => s.x === fed.food.x && s.y === fed.food.y));
+  assert.equal(game.snake.length, 3, 'input state is not mutated');
 });
 
-test('game ends on three misses or twenty seconds, then stops advancing', () => {
-  const game = {...createRound('running'), nextSpawn: Infinity, misses: 2,
-    eggs: [{id: 1, lane: 3 as const, age: TRAVEL_MS - 1}]};
-  const ended = stepRound(game, 1);
+test('snake ignores a reversal and wraps through walls', () => {
+  const game = createGame('running');
+  assert.equal(turn(game, 'left'), game, 'cannot reverse into the neck');
+  assert.equal(turn(game, 'up').next, 'up');
+  const edge = {...game, snake: [{x: COLS - 1, y: 3}, {x: COLS - 2, y: 3}, {x: COLS - 3, y: 3}]};
+  assert.deepEqual(step(edge).snake[0], {x: 0, y: 3});
+  const top = {...game, next: 'up' as const, snake: [{x: 4, y: 0}, {x: 4, y: 1}, {x: 4, y: 2}], dir: 'up' as const};
+  assert.deepEqual(step(top).snake[0], {x: 4, y: ROWS - 1});
+});
+
+test('touching its own body ends the game, then it stops advancing', () => {
+  const coil = {...createGame('running'), dir: 'up' as const, next: 'left' as const,
+    snake: [{x: 5, y: 5}, {x: 5, y: 4}, {x: 4, y: 4}, {x: 4, y: 5}, {x: 4, y: 6}], food: {x: 0, y: 0}};
+  const ended = step(coil);
   assert.equal(ended.phase, 'finished');
-  assert.equal(ended.misses, 3);
-  assert.equal(stepRound(ended, 100), ended);
-  assert.equal(stepRound({...createRound('running'), nextSpawn: Infinity, elapsed: ROUND_MS - 5}, 10).elapsed, ROUND_MS);
-});
-
-test('each ramp arrives at the correct basket position', () => {
-  assert.deepEqual(eggPosition({id: 0, lane: 0, age: TRAVEL_MS}), {x: 126, y: 82, rotation: 125});
-  assert.deepEqual(eggPosition({id: 0, lane: 3, age: TRAVEL_MS}), {x: 234, y: 150, rotation: 235});
+  assert.equal(step(ended), ended);
+  const chase = {...coil, next: 'up' as const, dir: 'right' as const,
+    snake: [{x: 5, y: 5}, {x: 5, y: 6}, {x: 6, y: 6}, {x: 6, y: 5}]};
+  assert.equal(step({...chase, next: 'right'}).phase, 'running', 'the vacated tail cell is safe');
 });
 
 test('both languages have matching content keys and all four cases', () => {

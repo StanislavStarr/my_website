@@ -51,7 +51,7 @@ npm run dev
 | Стили блоков, состояния, адаптивы | src/styles/site.module.css |
 | Порядок и содержание блоков главной | src/components/Landing.tsx |
 | Игровая логика | src/components/game/engine.ts |
-| Отрисовка игры | src/components/game/EggCatcher.tsx |
+| Отрисовка игры | src/components/game/SnakeGame.tsx |
 | Маршрутизация языков | src/i18n/routing.ts, src/proxy.ts |
 | Правила SEO | src/lib/seo.ts |
 | Структурированные данные | src/components/StructuredData.tsx |

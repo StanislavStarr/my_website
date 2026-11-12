@@ -6,7 +6,7 @@ import {useState, type ReactNode} from 'react';
 import {useTranslations} from 'next-intl';
 import {cx} from '@/lib/styles';
 
-const EggCatcher = dynamic(() => import('./EggCatcher'), {ssr: false, loading: () => <GameLoading />});
+const SnakeGame = dynamic(() => import('./SnakeGame'), {ssr: false, loading: () => <GameLoading />});
 
 function GameLoading() {
   const t = useTranslations('game');
@@ -30,7 +30,7 @@ export function GameConsole({portraitAlt, caption}: {portraitAlt: string; captio
             <span className={cx('name')}>Stanislav<br />Sinitsyn</span><span className={cx('mono')}>{caption}</span>
           </div>
         </div>
-        {open && <EggCatcher />}
+        {open && <SnakeGame />}
       </div>
 
       <div className={cx('console-bottom')}>

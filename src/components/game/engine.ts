@@ -1,56 +1,60 @@
-export const ROUND_MS = 20_000;
-export const TRAVEL_MS = 2_100;
-export const SPAWN_MS = 1_050;
-export const MAX_MISSES = 3;
+// Pure snake rules: no DOM, no timers, so they can be unit-tested.
+export const COLS = 15;
+export const ROWS = 16;
 
-export type Lane = 0 | 1 | 2 | 3;
-export type Egg = {id: number; lane: Lane; age: number};
-export type Round = {
-  phase: 'idle' | 'running' | 'finished';
-  elapsed: number; score: number; misses: number; lane: Lane;
-  nextSpawn: number; nextId: number; eggs: Egg[];
+export type Dir = 'up' | 'down' | 'left' | 'right';
+export type Point = {x: number; y: number};
+export type Phase = 'ready' | 'running' | 'finished';
+export type Game = {
+  phase: Phase;
+  snake: Point[];   // head first
+  dir: Dir;         // direction of the last completed move
+  next: Dir;        // direction requested for the next move
+  food: Point;
+  score: number;
 };
 
-export function createRound(phase: Round['phase'] = 'idle'): Round {
-  return {phase, elapsed: 0, score: 0, misses: 0, lane: 0,
-    nextSpawn: 400, nextId: 0, eggs: []};
-}
+const vectors: Record<Dir, Point> = {up: {x: 0, y: -1}, down: {x: 0, y: 1}, left: {x: -1, y: 0}, right: {x: 1, y: 0}};
+const opposite: Record<Dir, Dir> = {up: 'down', down: 'up', left: 'right', right: 'left'};
 
-export function stepRound(round: Round, delta: number, random = Math.random): Round {
-  if (round.phase !== 'running') return round;
-  let {nextSpawn, nextId, score, misses} = round;
-  const dt = Math.max(0, Math.min(delta, ROUND_MS - round.elapsed));
-  const elapsed = round.elapsed + dt;
-  const eggs = round.eggs.map((egg) => ({...egg, age: egg.age + dt}));
-  const remaining: Egg[] = [];
+export const same = (a: Point, b: Point) => a.x === b.x && a.y === b.y;
 
-  while (nextSpawn <= elapsed && nextSpawn < ROUND_MS) {
-    eggs.push({id: nextId++, lane: Math.min(3, Math.floor(random() * 4)) as Lane,
-      age: elapsed - nextSpawn});
-    nextSpawn += SPAWN_MS;
+export function placeFood(snake: Point[], rng: () => number = Math.random): Point {
+  const free: Point[] = [];
+  for (let y = 0; y < ROWS; y++) for (let x = 0; x < COLS; x++) {
+    if (!snake.some((s) => s.x === x && s.y === y)) free.push({x, y});
   }
-
-
-  for (const egg of eggs) {
-    if (misses >= MAX_MISSES) break;
-    if (egg.age < TRAVEL_MS) remaining.push(egg);
-    else if (egg.lane === round.lane) score++;
-    else misses++;
-  }
-
-  return {...round, elapsed, nextSpawn, nextId, score, misses, eggs: remaining,
-    phase: elapsed >= ROUND_MS || misses >= MAX_MISSES ? 'finished' : 'running'};
+  return free[Math.floor(rng() * free.length)] ?? {x: 0, y: 0};
 }
 
-export function eggPosition(egg: Egg) {
-  const p = egg.age / TRAVEL_MS;
-  const right = egg.lane % 2 === 1;
-  const top = egg.lane < 2;
-  const startX = right ? 320 : 40;
-  const endX = right ? 234 : 126;
-  const startY = top ? 30 : 100;
-  const endY = top ? 82 : 150;
-
-  return {x: startX + (endX - startX) * p, y: startY + (endY - startY) * p,
-    rotation: (right ? 1 : -1) * 55 + p * 180};
+export function createGame(phase: Phase = 'ready', rng: () => number = Math.random): Game {
+  const y = Math.floor(ROWS / 2), x = Math.floor(COLS / 2);
+  const snake = [{x, y}, {x: x - 1, y}, {x: x - 2, y}];
+  return {phase, snake, dir: 'right', next: 'right', food: placeFood(snake, rng), score: 0};
 }
+
+/** Queue a turn. A 180° reversal would bite the neck, so it is ignored. */
+export function turn(game: Game, dir: Dir): Game {
+  if (opposite[game.dir] === dir || game.next === dir) return game;
+  return {...game, next: dir};
+}
+
+/** Advance one cell. Walls wrap around; touching the own body ends the game. */
+export function step(game: Game, rng: () => number = Math.random): Game {
+  if (game.phase !== 'running') return game;
+  const v = vectors[game.next];
+  const head = {x: (game.snake[0].x + v.x + COLS) % COLS, y: (game.snake[0].y + v.y + ROWS) % ROWS};
+  const eats = same(head, game.food);
+  // The tail cell is vacated on this move unless the snake grows.
+  const body = eats ? game.snake : game.snake.slice(0, -1);
+  if (body.some((s) => same(s, head))) return {...game, dir: game.next, phase: 'finished'};
+
+  const snake = [head, ...body];
+  if (!eats) return {...game, snake, dir: game.next};
+  const full = snake.length === COLS * ROWS;
+  return {...game, snake, dir: game.next, score: game.score + 1,
+    food: full ? game.food : placeFood(snake, rng), phase: full ? 'finished' : 'running'};
+}
+
+/** Milliseconds per move: starts relaxed, speeds up with the score. */
+export const tickMs = (score: number) => Math.max(70, 150 - score * 4);
