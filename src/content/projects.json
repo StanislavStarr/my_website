@@ -1,0 +1,90 @@
+[
+  {
+    "slug": "ekhonish",
+    "url": "https://ekhonish.tj/",
+    "en": {
+      "title": "eKhonish",
+      "role": "Frontend lead / EdTech",
+      "summary": "An education platform connecting the people and tools behind the learning process.",
+      "contribution": "Led the development team and QA, worked with the client on priorities, and unified authentication across applications.",
+      "result": "The team delivered the MVP on schedule. I reduced the frontend bundle by approximately 30% and built reusable interface components.",
+      "short": "An education platform, from MVP to a connected ecosystem.",
+      "listRole": "Frontend lead / EdTech"
+    },
+    "ru": {
+      "title": "eKhonish",
+      "role": "Frontend lead / EdTech",
+      "summary": "Образовательная платформа, объединяющая участников и инструменты учебного процесса.",
+      "contribution": "Руководил командой разработки и QA, определял приоритеты вместе с заказчиком. Унифицировал аутентификацию между приложениями.",
+      "result": "Команда выпустила MVP в согласованные сроки. Я сократил frontend-бандл примерно на 30% и создал переиспользуемые компоненты интерфейса.",
+      "short": "Образовательная платформа: от MVP до общей экосистемы.",
+      "listRole": "Frontend lead / EdTech"
+    }
+  },
+  {
+    "slug": "rzd-cargo",
+    "url": "https://cargolk.rzd.ru/",
+    "en": {
+      "title": "RZD Cargo",
+      "role": "Frontend developer / Logistics",
+      "summary": "A customer portal for freight booking, reporting and shipment tracking.",
+      "contribution": "Built booking workflows, dashboards and map-based tracking. Migrated Vue and the build tooling while the team continued shipping features.",
+      "result": "Local development startup time dropped from roughly three minutes to 30 seconds after moving from Webpack to Vite. This is a developer workflow metric, not website loading speed.",
+      "short": "Freight booking and tracking, with a modernised frontend.",
+      "listRole": "Frontend developer / Logistics"
+    },
+    "ru": {
+      "title": "РЖД Груз",
+      "role": "Frontend-разработчик / Логистика",
+      "summary": "Личный кабинет для бронирования перевозок, отчётности и отслеживания грузов.",
+      "contribution": "Разработал сценарии бронирования, дашборды и отслеживание на карте. Провёл миграцию Vue и сборки без остановки выпуска функций.",
+      "result": "После перехода с Webpack на Vite локальный запуск сократился примерно с трёх минут до 30 секунд. Это ускорение работы разработчиков, а не загрузки сайта у клиентов.",
+      "short": "Бронирование и отслеживание перевозок, модернизация frontend.",
+      "listRole": "Frontend-разработчик / Логистика"
+    }
+  },
+  {
+    "slug": "client-base",
+    "url": null,
+    "en": {
+      "title": "Client Base",
+      "role": "Full-stack developer / B2B SaaS",
+      "summary": "A configurable CRM for managing customers, orders and documents.",
+      "contribution": "Built customer and order interfaces, reports and dashboards. Implemented features from database models and APIs through to the user interface.",
+      "result": "Integrated SignNow document signing and webhook-based status synchronisation, connecting document workflows to the CRM.",
+      "short": "A flexible CRM with connected document signing.",
+      "listRole": "Full-stack developer / B2B / SaaS"
+    },
+    "ru": {
+      "title": "Client Base",
+      "role": "Full-stack разработчик / B2B SaaS",
+      "summary": "Настраиваемая CRM для управления клиентами, заказами и документами.",
+      "contribution": "Разрабатывал интерфейсы клиентов и заказов, отчёты и дашборды. Реализовывал функции от моделей данных и API до пользовательского интерфейса.",
+      "result": "Интегрировал подписание документов через SignNow и синхронизацию статусов через webhooks, связав документооборот с CRM.",
+      "short": "Гибкая CRM с интеграцией подписания документов.",
+      "listRole": "Full-stack разработчик / B2B / SaaS"
+    }
+  },
+  {
+    "slug": "medtech",
+    "url": null,
+    "en": {
+      "title": "MedTech",
+      "role": "Frontend developer / Healthcare",
+      "summary": "Interfaces for clinical equipment reprocessing, from scanning to tracking the stages of the workflow.",
+      "contribution": "Developed interfaces for an approximately 11-stage equipment reprocessing workflow, including fault and sterility-status handling. Implemented barcode scanning, label printing and role-based access.",
+      "result": "Adapted the interfaces for barcode scanners and clinical workstations. Supported the workflow with equipment identification, stage statuses and labels.",
+      "short": "Equipment reprocessing workflows for clinical teams.",
+      "listRole": "Frontend developer / Healthcare"
+    },
+    "ru": {
+      "title": "MedTech",
+      "role": "Frontend-разработчик / Медицина",
+      "summary": "Интерфейсы санитарного цикла оборудования клиники: от сканирования до отслеживания этапов обработки.",
+      "contribution": "Разработал интерфейсы санитарного цикла примерно из 11 этапов с обработкой неисправностей и нарушений стерильности. Реализовал сканирование штрихкодов, печать этикеток и доступ по ролям.",
+      "result": "Адаптировал интерфейсы под сканеры и клинические рабочие станции. Реализовал идентификацию оборудования, отслеживание статусов этапов и работу с этикетками.",
+      "short": "Санитарный цикл оборудования: сканирование, статусы и этикетки.",
+      "listRole": "Frontend-разработчик / Медицина"
+    }
+  }
+]
