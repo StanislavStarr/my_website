@@ -3,9 +3,13 @@
 import {useEffect, useRef, useState, type KeyboardEvent, type PointerEvent} from 'react';
 import {useTranslations} from 'next-intl';
 import {cx} from '@/lib/styles';
+import {Icon, type IconName} from '@/components/Icon';
 import {COLS, ROWS, createGame, step, tickMs, turn, type Dir} from './engine';
 
 const CELL = 20;
+const pad: Array<[Dir, IconName, string]> = [
+  ['up', 'arrow-up', 'padUp'], ['left', 'arrow-left', 'padLeft'], ['down', 'arrow-down', 'padDown'], ['right', 'arrow-right', 'padRight']
+];
 const keys: Record<string, Dir> = {
   ArrowUp: 'up', ArrowDown: 'down', ArrowLeft: 'left', ArrowRight: 'right'
 };
@@ -66,6 +70,7 @@ export default function SnakeGame() {
     <div ref={root} className={cx('snake')} tabIndex={0} role="group" aria-label={t('field')}
       aria-describedby="game-hint" onKeyDown={onKeyDown}
       onPointerDown={(e) => {swipe.current = {x: e.clientX, y: e.clientY};}} onPointerUp={onPointerUp}>
+      <div className={cx('snake-field')}>
       <svg viewBox={'-4 -4 ' + (COLS * CELL + 8) + ' ' + (ROWS * CELL + 8)} preserveAspectRatio="xMidYMid meet" aria-hidden="true">
         <defs>
           <pattern id="snake-bg" width={CELL} height={CELL} patternUnits="userSpaceOnUse">
@@ -98,6 +103,14 @@ export default function SnakeGame() {
           {t(game.phase === 'finished' ? 'again' : 'start')}</button>
         <p id="game-hint">{t('hint')}</p>
       </div></div>}
+
+      </div>
+
+      <div className={cx('snake-pad')}>
+        {pad.map(([dir, icon, label]) => <button key={dir} type="button" className={cx('pad-' + dir)}
+          aria-label={t(label)} tabIndex={-1}
+          onPointerDown={(e) => {e.preventDefault(); steer(dir);}}><Icon name={icon} /></button>)}
+      </div>
 
       <span className={cx('game-sr')} role="status" aria-live="polite">
         {game.phase === 'finished' ? t('finished', {score: game.score}) : ''}

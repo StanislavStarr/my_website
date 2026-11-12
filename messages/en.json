@@ -109,7 +109,11 @@
     "again": "PLAY AGAIN",
     "finished": "Game finished. Score: {score}",
     "field": "Snake game",
-    "loading": "Loading game…"
+    "loading": "Loading game…",
+    "padUp": "Up",
+    "padDown": "Down",
+    "padLeft": "Left",
+    "padRight": "Right"
   },
   "motion": {
     "pause": "Pause motion",
