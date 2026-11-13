@@ -12,10 +12,24 @@ export function CaseDialog({children}: {children: ReactNode}) {
     const dialog = ref.current;
     if (dialog && !dialog.open) dialog.showModal();
 
-    const previous = document.body.style.overflow;
+    const curtain = document.querySelector<HTMLElement>('[data-curtain]');
+    if (curtain?.matches(':popover-open')) {
+      const time = curtain.getAnimations()[0]?.currentTime ?? null;
+      curtain.hidePopover();
+      curtain.showPopover();
+      const animation = curtain.getAnimations()[0];
+      if (animation && time !== null) animation.currentTime = time;
+    }
+
+    const {overflow, paddingRight} = document.body.style;
+    const scrollbar = window.innerWidth - document.documentElement.clientWidth;
     document.body.style.overflow = 'hidden';
-    
-    return () => {document.body.style.overflow = previous;};
+    if (scrollbar > 0) document.body.style.paddingRight = scrollbar + 'px';
+
+    return () => {
+      document.body.style.overflow = overflow;
+      document.body.style.paddingRight = paddingRight;
+    };
   }, []);
 
   return (

@@ -4,6 +4,9 @@ import {useEffect, useRef} from 'react';
 import {useRouter} from 'next/navigation';
 import {cx} from '@/lib/styles';
 
+const CURTAIN_MS = 900;
+const CURTAIN_PUSH_MS = 300;
+
 // Progressive enhancements: normal links and all content also work without JS.
 export function Enhancements() {
   const router = useRouter();
@@ -56,6 +59,13 @@ export function Enhancements() {
       pill.style.setProperty('--r', far * 2 + 2 + 'px');
     };
 
+    const prefetch = (event: PointerEvent) => {
+      const anchor = event.target instanceof Element
+        ? event.target.closest<HTMLAnchorElement>('a[data-transition]') : null;
+      if (!anchor || anchor.origin !== location.origin) return;
+      router.prefetch(anchor.pathname);
+    };
+
     const click = (event: MouseEvent) => {
       const anchor = event.target instanceof Element
         ? event.target.closest<HTMLAnchorElement>('a') : null;
@@ -80,15 +90,18 @@ export function Enhancements() {
       if (busy) return;
       busy = true;
       const panel = curtain.current;
+      if (panel && !panel.matches(':popover-open')) panel.showPopover();
       panel?.classList.add(cx('run'));
-      navigationTimer = setTimeout(() => router.push(url.pathname + url.search + url.hash), 210);
+      navigationTimer = setTimeout(() => router.push(url.pathname + url.search + url.hash, {scroll: false}), CURTAIN_PUSH_MS);
       animationTimer = setTimeout(() => {
         panel?.classList.remove(cx('run'));
+        if (panel?.matches(':popover-open')) panel.hidePopover();
         busy = false;
-      }, 700);
+      }, CURTAIN_MS + 50);
     };
 
     document.addEventListener('pointermove', move, {passive: true});
+    document.addEventListener('pointerover', prefetch, {passive: true});
     document.addEventListener('pointerover', pillAt, {passive: true});
     document.addEventListener('pointerout', pillAt, {passive: true});
     document.addEventListener('pointerleave', resetMagnet);
@@ -100,6 +113,7 @@ export function Enhancements() {
       clearTimeout(animationTimer);
       resetMagnet();
       document.removeEventListener('pointermove', move);
+      document.removeEventListener('pointerover', prefetch);
       document.removeEventListener('pointerover', pillAt);
       document.removeEventListener('pointerout', pillAt);
       document.removeEventListener('pointerleave', resetMagnet);
@@ -109,6 +123,6 @@ export function Enhancements() {
   }, [router]);
 
   return (
-    <div className={cx('curtain')} ref={curtain} aria-hidden="true" />
+    <div className={cx('curtain')} ref={curtain} popover="manual" data-curtain="" aria-hidden="true" />
   )
 }
