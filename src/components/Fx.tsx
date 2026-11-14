@@ -2,7 +2,6 @@
 
 import {useEffect} from 'react';
 
-// Progressive motion layer: content is fully visible without JS or with reduced motion.
 export function Fx() {
   useEffect(() => {
     const root = document.documentElement;

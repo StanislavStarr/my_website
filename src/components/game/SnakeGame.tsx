@@ -30,7 +30,7 @@ export default function SnakeGame() {
     if (game.phase !== 'running') return;
     let frame = 0, last = performance.now(), acc = 0;
     const loop = (now: number) => {
-      acc += Math.min(now - last, 250); // a background tab must not cause a jump
+      acc += Math.min(now - last, 250);
       last = now;
       let next = state.current;
       while (acc >= tickMs(next.score) && next.phase === 'running') {
@@ -55,7 +55,6 @@ export default function SnakeGame() {
     else if (event.key === ' ' && state.current.phase === 'finished') {event.preventDefault(); start();}
   };
 
-  // Touch screens have no arrow keys, so a swipe steers as well.
   const onPointerUp = (event: PointerEvent) => {
     const from = swipe.current; swipe.current = null;
     if (!from || event.pointerType === 'mouse' || state.current.phase === 'finished') return;

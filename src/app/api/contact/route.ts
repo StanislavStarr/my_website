@@ -19,7 +19,6 @@ export async function POST(request: Request) {
   let data: Record<string, unknown>;
   try {data = await request.json();} catch {return json({error: 'bad_request'}, 400);}
 
-  // Honeypot: real visitors never fill this hidden field.
   if (typeof data.website === 'string' && data.website) return json({ok: true});
 
   const text = (key: string, max: number) => typeof data[key] === 'string' ? (data[key] as string).trim().slice(0, max) : '';

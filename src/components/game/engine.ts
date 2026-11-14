@@ -1,4 +1,3 @@
-// Pure snake rules: no DOM, no timers, so they can be unit-tested.
 export const COLS = 15;
 export const ROWS = 16;
 
@@ -7,9 +6,9 @@ export type Point = {x: number; y: number};
 export type Phase = 'ready' | 'running' | 'finished';
 export type Game = {
   phase: Phase;
-  snake: Point[];   // head first
-  dir: Dir;         // direction of the last completed move
-  next: Dir;        // direction requested for the next move
+  snake: Point[];
+  dir: Dir;
+  next: Dir;
   food: Point;
   score: number;
 };
@@ -33,19 +32,16 @@ export function createGame(phase: Phase = 'ready', rng: () => number = Math.rand
   return {phase, snake, dir: 'right', next: 'right', food: placeFood(snake, rng), score: 0};
 }
 
-/** Queue a turn. A 180° reversal would bite the neck, so it is ignored. */
 export function turn(game: Game, dir: Dir): Game {
   if (opposite[game.dir] === dir || game.next === dir) return game;
   return {...game, next: dir};
 }
 
-/** Advance one cell. Walls wrap around; touching the own body ends the game. */
 export function step(game: Game, rng: () => number = Math.random): Game {
   if (game.phase !== 'running') return game;
   const v = vectors[game.next];
   const head = {x: (game.snake[0].x + v.x + COLS) % COLS, y: (game.snake[0].y + v.y + ROWS) % ROWS};
   const eats = same(head, game.food);
-  // The tail cell is vacated on this move unless the snake grows.
   const body = eats ? game.snake : game.snake.slice(0, -1);
   if (body.some((s) => same(s, head))) return {...game, dir: game.next, phase: 'finished'};
 
@@ -56,5 +52,4 @@ export function step(game: Game, rng: () => number = Math.random): Game {
     food: full ? game.food : placeFood(snake, rng), phase: full ? 'finished' : 'running'};
 }
 
-/** Milliseconds per move: starts relaxed, speeds up with the score. */
 export const tickMs = (score: number) => Math.max(70, 150 - score * 4);

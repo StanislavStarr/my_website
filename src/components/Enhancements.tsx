@@ -4,10 +4,9 @@ import {useEffect, useRef} from 'react';
 import {useRouter} from 'next/navigation';
 import {cx} from '@/lib/styles';
 
-const CURTAIN_MS = 900;
+const CURTAIN_MS = 600;
 const CURTAIN_PUSH_MS = 300;
 
-// Progressive enhancements: normal links and all content also work without JS.
 export function Enhancements() {
   const router = useRouter();
   const curtain = useRef<HTMLDivElement>(null);
@@ -46,7 +45,6 @@ export function Enhancements() {
       if (label) label.style.transform = 'translate(' + x * .4 + 'px,' + y * .4 + 'px)';
     };
 
-    // White fill grows from (and retreats to) the pointer position on pills.
     const pillAt = (event: PointerEvent) => {
       const pill = event.target instanceof Element ? event.target.closest<HTMLElement>('[data-pill]') : null;
       if (!pill || (event.relatedTarget instanceof Node && pill.contains(event.relatedTarget))) return;

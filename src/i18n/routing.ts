@@ -6,7 +6,7 @@ export const routing = defineRouting({
   localePrefix: 'as-needed',
   localeDetection: false,
   localeCookie: false,
-  // Explicit metadata owns hreflang, including x-default.
+
   alternateLinks: false
 });
 
