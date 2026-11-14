@@ -5,7 +5,7 @@ import {useRouter} from 'next/navigation';
 import {cx} from '@/lib/styles';
 
 const CURTAIN_MS = 600;
-const CURTAIN_PUSH_MS = 300;
+const CURTAIN_PUSH_MS = 0;
 
 export function Enhancements() {
   const router = useRouter();
@@ -100,6 +100,7 @@ export function Enhancements() {
 
     document.addEventListener('pointermove', move, {passive: true});
     document.addEventListener('pointerover', prefetch, {passive: true});
+    document.addEventListener('pointerdown', prefetch, {passive: true});
     document.addEventListener('pointerover', pillAt, {passive: true});
     document.addEventListener('pointerout', pillAt, {passive: true});
     document.addEventListener('pointerleave', resetMagnet);
@@ -112,6 +113,7 @@ export function Enhancements() {
       resetMagnet();
       document.removeEventListener('pointermove', move);
       document.removeEventListener('pointerover', prefetch);
+      document.removeEventListener('pointerdown', prefetch);
       document.removeEventListener('pointerover', pillAt);
       document.removeEventListener('pointerout', pillAt);
       document.removeEventListener('pointerleave', resetMagnet);

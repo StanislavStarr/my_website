@@ -10,25 +10,45 @@ export function CaseDialog({children}: {children: ReactNode}) {
 
   useEffect(() => {
     const dialog = ref.current;
-    if (dialog && !dialog.open) dialog.showModal();
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    let locked = false;
+    const saved = {overflow: '', paddingRight: ''};
+
+    const open = () => {
+      if (!dialog || dialog.open) return;
+      dialog.showModal();
+
+      saved.overflow = document.body.style.overflow;
+      saved.paddingRight = document.body.style.paddingRight;
+      const scrollbar = window.innerWidth - document.documentElement.clientWidth;
+      document.body.style.overflow = 'hidden';
+      if (scrollbar > 0) document.body.style.paddingRight = scrollbar + 'px';
+      locked = true;
+
+      const curtain = document.querySelector<HTMLElement>('[data-curtain]');
+      if (curtain?.matches(':popover-open')) {
+        const time = curtain.getAnimations()[0]?.currentTime ?? null;
+        curtain.hidePopover();
+        curtain.showPopover();
+        const animation = curtain.getAnimations()[0];
+        if (animation && time !== null) animation.currentTime = time;
+      }
+    };
 
     const curtain = document.querySelector<HTMLElement>('[data-curtain]');
-    if (curtain?.matches(':popover-open')) {
-      const time = curtain.getAnimations()[0]?.currentTime ?? null;
-      curtain.hidePopover();
-      curtain.showPopover();
-      const animation = curtain.getAnimations()[0];
-      if (animation && time !== null) animation.currentTime = time;
-    }
-
-    const {overflow, paddingRight} = document.body.style;
-    const scrollbar = window.innerWidth - document.documentElement.clientWidth;
-    document.body.style.overflow = 'hidden';
-    if (scrollbar > 0) document.body.style.paddingRight = scrollbar + 'px';
+    const animation = curtain?.matches(':popover-open') ? curtain.getAnimations()[0] : undefined;
+    const duration = Number(animation?.effect?.getComputedTiming().duration ?? 0);
+    const elapsed = Number(animation?.currentTime ?? 0);
+    const wait = animation ? Math.max(0, duration * 0.45 - elapsed) : 0;
+    if (wait > 0) timer = setTimeout(open, wait);
+    else open();
 
     return () => {
-      document.body.style.overflow = overflow;
-      document.body.style.paddingRight = paddingRight;
+      clearTimeout(timer);
+      if (locked) {
+        document.body.style.overflow = saved.overflow;
+        document.body.style.paddingRight = saved.paddingRight;
+      }
     };
   }, []);
 
