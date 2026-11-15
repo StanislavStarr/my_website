@@ -25,7 +25,7 @@
     "slug": "rzd-cargo",
     "url": "https://cargolk.rzd.ru/",
     "en": {
-      "title": "RZD Cargo",
+      "title": "Railway Logistics",
       "role": "Frontend developer / Logistics",
       "summary": "A customer portal for freight booking, reporting and shipment tracking.",
       "contribution": "Built booking workflows, dashboards and map-based tracking. Migrated Vue and the build tooling while the team continued shipping features.",
