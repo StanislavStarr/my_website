@@ -8,14 +8,15 @@
 --lcd:#c5bb96;
 --lcd-ink:#303526;
 --line:#51483b;
+--led:#9bd07f;
 --ease:cubic-bezier(.22,1,.36,1)}
 
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{interpolate-size:allow-keywords;scroll-behavior:smooth;scrollbar-color:#51483b #181612}
 body{margin:0;
 background:var(--bg);
 color:var(--ink);
-font-family:Arial,Helvetica,sans-serif;
+font-family:var(--font-sans),system-ui,sans-serif;font-weight:300;
 -webkit-font-smoothing:antialiased}
 button,a{-webkit-tap-highlight-color:transparent}
 button,input{font:inherit}
@@ -28,7 +29,8 @@ outline-offset:5px}
 button{border:0}
 button:disabled{cursor:default}
 h1,h2,h3,p{margin:0}
-h1,h2,h3{font-weight:400}
+h1,h2,h3{font-weight:300;text-wrap:balance}
+p{text-wrap:pretty}
 p{line-height:1.55}
 ::selection{background:var(--accent);
 color:var(--bg)}

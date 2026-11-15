@@ -28,14 +28,13 @@ export async function Landing({locale}: {locale: Locale}) {
 
   return (
     <main id="main" tabIndex={-1}>
-      <StructuredData locale={locale} />
+      <StructuredData locale={locale} faq={[1, 2, 3, 4].map((n) => ({q: t('q' + n), a: t('a' + n)}))} />
       <div className={cx('boot')} aria-hidden="true"><div>SS—01 / BOOTING<i>_</i><b /></div></div>
       <span data-glow-class={cx('glow')} hidden />
       <Fx />
 
       <div className={cx('wrap')}>
         <section className={cx('hero')} aria-labelledby="headline">
-          <div className={cx('section-label mono')}><span>{t('heroLabel')}</span><span>01 — INTRO</span></div>
           <div className={cx('hero-grid')}>
             <div>
               <div className={cx('eyebrow mono')}><span className={cx('status-dot')} /><span>{t('eyebrow')}</span></div>
@@ -59,20 +58,20 @@ export async function Landing({locale}: {locale: Locale}) {
 
       <div className={cx('marquee-shell')} aria-hidden="true">
         <div className={cx('marquee')} data-marquee>
-          {[0, 1].map((n) => <span key={n}>IDEAS INTO PRODUCTS <b><Icon name="asterisk" /></b> DESIGN INTO CODE <b><Icon name="asterisk" /></b></span>)}
+          {[0, 1].map((n) => <span key={n}>{['React', 'Vue', 'TypeScript', 'Next.js', 'React Native', 'Telegram Mini Apps'].map((word) =>
+            <span key={word}>{word}<b><Icon name="asterisk" /></b></span>)}</span>)}
         </div>
       </div>
 
       <div className={cx('wrap')}>
         <MotionToggle />
-        <div className={cx('stats')}>
-          {stats.map(([n, pre, suf, key], i) => <div key={key} {...rv('stat', i)}>
-            <b data-count={n} data-pre={pre} data-suf={suf}>{pre + n + suf}</b><span>{t(key)}</span>
-          </div>)}
-        </div>
+        <ul className={cx('proof')}>
+          {stats.map(([n, pre, suf, key], i) => <li key={key} {...rv('', i)}>
+            <b data-count={n} data-pre={pre} data-suf={suf}>{pre + n + suf}</b> {t(key)}
+          </li>)}
+        </ul>
 
         <section className={cx('section')} id="work" aria-labelledby="work-heading">
-          <div className={cx('section-label mono')}><span>{t('workLabel')}</span><span>02 — WORK</span></div>
           <div {...rv('section-heading')}>
             <h2 id="work-heading">{t('workHeading')}</h2><p>{rich('workIntro')}</p>
           </div>
@@ -95,21 +94,18 @@ export async function Landing({locale}: {locale: Locale}) {
         </section>
 
         <section className={cx('section services')} id="services" aria-labelledby="services-heading">
-          <div className={cx('section-label mono')}><span>{t('servicesLabel')}</span><span>03 — SERVICES</span></div>
           <div {...rv('section-heading')}>
             <h2 id="services-heading">{rich('servicesHeading')}</h2><p>{rich('servicesIntro')}</p>
           </div>
 
           <div className={cx('service-list')}>
             {tags.map((tag, index) => <article {...rv('service', index)} key={tag}>
-              <span className={cx('mono')}>[{String(index + 1).padStart(2, '0')}]</span>
               <div><h3>{t('s' + (index + 1))}</h3><p>{t('s' + (index + 1) + 'p')}</p><small>{tag}</small></div>
             </article>)}
           </div>
         </section>
 
         <section className={cx('section process')} id="process" aria-labelledby="process-heading">
-          <div className={cx('section-label mono')}><span>{t('processLabel')}</span><span>04 — PROCESS</span></div>
           <div {...rv('section-heading')}>
             <h2 id="process-heading">{t('processHeading')}</h2><p>{rich('processIntro')}</p>
           </div>
@@ -121,7 +117,7 @@ export async function Landing({locale}: {locale: Locale}) {
         </section>
 
         <section {...rv('about')} id="about" aria-labelledby="about-heading">
-          <div><span className={cx('mono muted')}>05 — PLAYER ONE</span>
+          <div>
             <h2 className={cx('about-heading')} id="about-heading">{rich('aboutHeading')}</h2></div>
           <div className={cx('about-copy')}>
             <p>{t('aboutLead')}</p><p>{t('aboutBody')}</p>
@@ -130,7 +126,7 @@ export async function Landing({locale}: {locale: Locale}) {
         </section>
         
         <section className={cx('section faq')} aria-labelledby="faq-heading">
-          <div {...rv('')}><span className={cx('mono muted')}>06 — BEFORE WE START</span><h2 id="faq-heading">{rich('faqHeading')}</h2></div>
+          <div {...rv('')}><h2 id="faq-heading">{rich('faqHeading')}</h2></div>
           <div>{[1, 2, 3, 4].map((number) => <details key={number} {...rv('', number)}>
             <summary>{t('q' + number)}</summary><p>{t('a' + number)}</p>
           </details>)}</div>

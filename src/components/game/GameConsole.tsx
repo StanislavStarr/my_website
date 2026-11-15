@@ -28,7 +28,7 @@ export function GameConsole({portraitAlt, caption}: {portraitAlt: string; captio
             sizes="(max-width: 650px) 90vw, (max-width: 1440px) 42vw, 560px" />
             
           <div className={cx('photo-caption')}>
-            <span className={cx('name')}>Stanislav<br />Sinitsyn</span><span className={cx('mono')}>{caption}</span>
+            <span className={cx('name')}>Stanislav<br />Sinitsyn</span>
           </div>
         </div>
         {open && <SnakeGame />}

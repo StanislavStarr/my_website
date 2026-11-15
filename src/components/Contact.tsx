@@ -10,9 +10,6 @@ export async function Contact({locale}: {locale: Locale}) {
 
   return (
     <section className={cx('contact')} id="contact" aria-labelledby="contact-heading">
-      <div className={cx('section-label mono')}>
-        <span>{t('contactLabel')}</span><span>07 — NEXT MOVE</span>
-      </div>
 
       <div {...rv('contact-line')}>
         <h2 id="contact-heading">{t.rich('contactHeading', {br: () => <br />, em: (text) => <em>{text}</em>})}</h2>

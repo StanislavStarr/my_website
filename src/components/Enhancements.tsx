@@ -98,6 +98,15 @@ export function Enhancements() {
       }, CURTAIN_MS + 50);
     };
 
+    // Mark the nav link of the section currently in view.
+    const links = [...document.querySelectorAll<HTMLAnchorElement>('nav a[href*="#"]')];
+    const spy = new IntersectionObserver((entries) => entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      links.forEach((link) => link.toggleAttribute('aria-current', false));
+      links.filter((link) => link.hash === '#' + entry.target.id).forEach((link) => link.setAttribute('aria-current', 'location'));
+    }), {rootMargin: '-45% 0px -50% 0px'});
+    document.querySelectorAll('#work, #services, #contact').forEach((el) => spy.observe(el));
+
     document.addEventListener('pointermove', move, {passive: true});
     document.addEventListener('pointerover', prefetch, {passive: true});
     document.addEventListener('pointerdown', prefetch, {passive: true});
@@ -108,6 +117,7 @@ export function Enhancements() {
     window.addEventListener('portfolio:motion', resetMagnet);
     
     return () => {
+      spy.disconnect();
       clearTimeout(navigationTimer);
       clearTimeout(animationTimer);
       resetMagnet();
