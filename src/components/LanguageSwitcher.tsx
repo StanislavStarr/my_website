@@ -11,7 +11,7 @@ export function LanguageSwitcher({locale, label}: {locale: Locale; label: string
     <div className={cx('lang')} aria-label={label}>
       {(['en', 'ru'] as const).map((language) =>
         <a key={language} href={localizedPath(language, pathname)}
-          hrefLang={language} lang={language} aria-label={language === 'en' ? 'English' : 'Русский'}
+          hrefLang={language} lang={language} aria-label={language === 'en' ? 'EN — English' : 'RU — Русский'}
           aria-current={language === locale ? 'page' : undefined}>
           {language.toUpperCase()}
         </a>

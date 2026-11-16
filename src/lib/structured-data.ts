@@ -2,7 +2,7 @@ import {localizedPath, type Locale} from './paths';
 import {site, servedCountries} from './site';
 import type {Project} from './projects';
 
-export type ServiceItem = {name: string; description: string};
+export type ServiceItem = {name: string; description: string; path?: string};
 
 const areaServed = () => [
   ...servedCountries.map((name) => ({'@type': 'Country', name})),
@@ -115,7 +115,7 @@ export function buildGraph({origin, locale, project, faq, services = [], service
         inLanguage: locale,
         provider: {'@id': personId},
         areaServed: areaServed(),
-        url: origin + localizedPath(locale) + '#services'
+        url: service.path ? origin + localizedPath(locale, service.path) : origin + localizedPath(locale) + '#services'
       });
     }
   }

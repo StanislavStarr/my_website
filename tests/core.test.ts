@@ -92,7 +92,7 @@ test('both languages have matching content keys and all four cases', () => {
 
 test('structured data names countries, both name spellings and localized services', async () => {
   const {buildGraph} = await import('../src/lib/structured-data.ts');
-  const services = [{name: 'Web development', description: 'Sites'}, {name: 'SEO & GEO', description: 'Search'}];
+  const services = [{name: 'Web development', description: 'Sites', path: '/services/web-development'}, {name: 'Design', description: 'UX'}];
   const graph = buildGraph({origin: 'https://example.com', locale: 'ru', services,
     faq: [{q: 'Q', a: 'A'}]})['@graph'] as Record<string, any>[];
   const type = (t: string) => graph.filter((node) => node['@type'] === t);
@@ -103,6 +103,8 @@ test('structured data names countries, both name spellings and localized service
   assert.ok(areas.includes('Russia') && areas.includes('United States') && areas.includes('Europe'));
   assert.ok(!areas.some((name: string) => /^[A-Z]{2}$/.test(name)), 'no bare ISO codes');
   assert.equal(type('Service').length, 2);
+  assert.deepEqual(type('Service').map((service) => service.url),
+    ['https://example.com/ru/services/web-development', 'https://example.com/ru#services']);
   assert.equal(type('FAQPage').length, 1);
 });
 

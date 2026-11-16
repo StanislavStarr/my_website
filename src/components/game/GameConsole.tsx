@@ -24,7 +24,7 @@ export function GameConsole({portraitAlt, caption}: {portraitAlt: string; captio
       <div className={cx('portrait-screen')}>
         <div className={cx('portrait-view')} hidden={open}>
           <Image className={cx('portrait')} src="/images/portrait.png" alt={portraitAlt}
-            width={1086} height={1448} preload
+            width={1086} height={1448} preload fetchPriority="high"
             sizes="(max-width: 650px) 90vw, (max-width: 1440px) 42vw, 560px" />
             
           <div className={cx('photo-caption')}>

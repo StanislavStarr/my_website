@@ -12,6 +12,8 @@ import {localizedPath, type Locale} from '@/lib/paths';
 import {site} from '@/lib/site';
 import {Icon} from '@/components/Icon';
 
+const servicePages: Record<number, string> = {2: '/services/web-development', 3: '/services/mobile-apps', 6: '/services/seo-geo'};
+
 export async function Landing({locale}: {locale: Locale}) {
   const t = await getTranslations({locale});
   const rich = (key: string) => t.rich(key, {br: () => <br />, em: (text) => <em>{text}</em>});
@@ -30,7 +32,7 @@ export async function Landing({locale}: {locale: Locale}) {
     <main id="main" tabIndex={-1}>
       <StructuredData locale={locale}
         faq={[1, 2, 3, 4].map((n) => ({q: t('q' + n), a: t('a' + n)}))}
-        services={[1, 2, 3, 4, 5, 6].map((n) => ({name: t('s' + n), description: t('s' + n + 'p')}))} />
+        services={[1, 2, 3, 4, 5, 6].map((n) => ({name: t('s' + n), description: t('s' + n + 'p'), path: servicePages[n]}))} />
       <div className={cx('boot')} aria-hidden="true"><div>SS—01 / BOOTING<i>_</i><b /></div></div>
       <span data-glow-class={cx('glow')} hidden />
       <Fx />
