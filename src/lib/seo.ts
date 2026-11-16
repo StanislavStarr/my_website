@@ -1,6 +1,7 @@
 import type {Metadata} from 'next';
 import {localizedPath, type Locale} from './paths';
 import {site} from './site';
+import {ogImagePath} from './og-paths';
 
 export function getSiteOrigin(value = process.env.SITE_URL) {
   if (!value?.trim()) return undefined;
@@ -51,14 +52,14 @@ export function pageMetadata({
       alternateLocale: locale === 'ru' ? 'en_US' : 'ru_RU',
       ...(origin ? {
         url: absolute(locale),
-        images: [{url: origin + '/og-image', width: 1200, height: 630, alt: title}]
+        images: [{url: origin + ogImagePath(locale), width: 1200, height: 630, alt: title}]
       } : {})
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      ...(origin ? {images: [origin + '/og-image']} : {})
+      ...(origin ? {images: [origin + ogImagePath(locale)]} : {})
     }
   };
 }

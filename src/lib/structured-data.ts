@@ -26,7 +26,7 @@ export function buildGraph({origin, locale, project, faq, services = []}: {
       url: origin,
       jobTitle: 'Independent web and mobile developer',
       image: origin + '/images/portrait.png',
-      sameAs: [site.telegram],
+      sameAs: [site.telegram, ...site.profiles],
       knowsLanguage: ['ru', 'en'],
       knowsAbout: ['Web development', 'Full-stack development', 'React', 'Vue', 'TypeScript',
         'React Native', 'Expo', 'PWA', 'SaaS', 'Telegram Mini Apps', 'Telegram bots',
