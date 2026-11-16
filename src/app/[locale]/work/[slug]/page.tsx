@@ -21,7 +21,7 @@ export async function generateMetadata({params}: Props) {
   if (!project || !hasLocale(routing.locales, locale)) notFound();
 
   return pageMetadata({locale, path: '/work/' + slug,
-    title: project[locale].title + ' — ' + site.name,
+    title: project[locale].title + ' — ' + site.names[locale],
     description: project[locale].summary});
 }
 

@@ -89,3 +89,41 @@ test('both languages have matching content keys and all four cases', () => {
     }
   }
 });
+
+test('structured data names countries, both name spellings and localized services', async () => {
+  const {buildGraph} = await import('../src/lib/structured-data.ts');
+  const services = [{name: 'Web development', description: 'Sites'}, {name: 'SEO & GEO', description: 'Search'}];
+  const graph = buildGraph({origin: 'https://example.com', locale: 'ru', services,
+    faq: [{q: 'Q', a: 'A'}]})['@graph'] as Record<string, any>[];
+  const type = (t: string) => graph.filter((node) => node['@type'] === t);
+  const person = type('Person')[0];
+  assert.equal(person.name, 'Станислав Синицын');
+  assert.deepEqual(person.alternateName, ['Stanislav Sinitsyn']);
+  const areas = type('ProfessionalService')[0].areaServed.map((a: {name: string}) => a.name);
+  assert.ok(areas.includes('Russia') && areas.includes('United States') && areas.includes('Europe'));
+  assert.ok(!areas.some((name: string) => /^[A-Z]{2}$/.test(name)), 'no bare ISO codes');
+  assert.equal(type('Service').length, 2);
+  assert.equal(type('FAQPage').length, 1);
+});
+
+test('robots and sitemap follow the indexing gate', async () => {
+  const {default: robots} = await import('../src/app/robots.ts');
+  const {default: sitemap} = await import('../src/app/sitemap.ts');
+  const saved = {url: process.env.SITE_URL, on: process.env.ENABLE_INDEXING};
+  try {
+    process.env.SITE_URL = 'https://example.com';
+    process.env.ENABLE_INDEXING = 'true';
+    const open = robots() as {rules: {allow?: string}; sitemap?: string};
+    assert.equal(open.rules.allow, '/');
+    assert.equal(open.sitemap, 'https://example.com/sitemap.xml');
+    const entries = sitemap();
+    assert.equal(entries.length, 10);
+    assert.equal(entries[0].url, 'https://example.com', 'root has no trailing slash, like the canonical tag');
+    assert.ok(entries.every((entry) => entry.lastModified && entry.alternates?.languages));
+    process.env.ENABLE_INDEXING = 'false';
+    assert.deepEqual((robots() as {rules: {disallow?: string}}).rules, {userAgent: '*', disallow: '/'});
+  } finally {
+    if (saved.url === undefined) delete process.env.SITE_URL; else process.env.SITE_URL = saved.url;
+    if (saved.on === undefined) delete process.env.ENABLE_INDEXING; else process.env.ENABLE_INDEXING = saved.on;
+  }
+});

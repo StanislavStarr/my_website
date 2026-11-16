@@ -1,5 +1,6 @@
 import type {Metadata} from 'next';
 import {localizedPath, type Locale} from './paths';
+import {site} from './site';
 
 export function getSiteOrigin(value = process.env.SITE_URL) {
   if (!value?.trim()) return undefined;
@@ -45,7 +46,7 @@ export function pageMetadata({
       type: 'website',
       title,
       description,
-      siteName: 'Stanislav Sinitsyn',
+      siteName: site.names[locale],
       locale: locale === 'ru' ? 'ru_RU' : 'en_US',
       alternateLocale: locale === 'ru' ? 'en_US' : 'ru_RU',
       ...(origin ? {

@@ -22,4 +22,4 @@ Pill buttons with cursor-origin white fill; console shell with portrait/snake sc
 Boot overlay, word-by-word headline reveal, scroll reveals, count-up proof numbers, scramble on step numbers, magnetic buttons, marquee of the real stack. All gated by reduced-motion and the on-page toggle.
 
 ## SEO / GEO
-Person + ProfessionalService (areaServed RU/CIS countries + remote worldwide, knowsLanguage ru/en) + WebSite + Service list + FAQPage on the landing; WebPage + BreadcrumbList on cases; hreflang en/ru/x-default; indexing gated by SITE_URL + ENABLE_INDEXING.
+Person + ProfessionalService (areaServed named countries (RU/CIS, US) + Europe + remote worldwide, knowsLanguage ru/en) + WebSite + Service list + FAQPage on the landing; WebPage + BreadcrumbList on cases; hreflang en/ru/x-default; indexing gated by SITE_URL + ENABLE_INDEXING.

@@ -33,7 +33,8 @@ for (const locale of ['en', 'ru']) {
       assert.match(content, locale === 'ru' ? /Мой вклад/ : /My contribution/);
     }
     if (origin) {
-      assert.ok(content.includes('href="' + origin + route + '"'), route + ': canonical URL');
+      const canonical = route === '/' ? origin : origin + route;
+      assert.ok(content.includes('href="' + canonical + '"'), route + ': canonical URL');
       assert.match(content, /hrefLang="x-default"|hreflang="x-default"/);
       assert.match(html, /application\/ld\+json/);
     }

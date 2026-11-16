@@ -20,7 +20,7 @@ Direct work with one named developer, from design to launch, covering web, React
 
 ## Operating Context
 
-Bilingual site (ru default, en) on Next.js + next-intl, deployed on Vercel (stanislavstarr.vercel.app). Cases open as intercepted-route modals. Contact: brief form (Resend), Telegram link, email.
+Bilingual site (en default on `/`, ru on `/ru`) on Next.js + next-intl, deployed on Vercel (stanislavstarr.vercel.app). Cases open as intercepted-route modals. Contact: brief form (Resend), Telegram link, email.
 
 ## Capabilities and Constraints
 

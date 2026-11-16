@@ -28,7 +28,9 @@ export async function Landing({locale}: {locale: Locale}) {
 
   return (
     <main id="main" tabIndex={-1}>
-      <StructuredData locale={locale} faq={[1, 2, 3, 4].map((n) => ({q: t('q' + n), a: t('a' + n)}))} />
+      <StructuredData locale={locale}
+        faq={[1, 2, 3, 4].map((n) => ({q: t('q' + n), a: t('a' + n)}))}
+        services={[1, 2, 3, 4, 5, 6].map((n) => ({name: t('s' + n), description: t('s' + n + 'p')}))} />
       <div className={cx('boot')} aria-hidden="true"><div>SS—01 / BOOTING<i>_</i><b /></div></div>
       <span data-glow-class={cx('glow')} hidden />
       <Fx />
