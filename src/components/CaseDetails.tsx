@@ -37,6 +37,10 @@ export async function CaseDetails({project, locale, modal = false}: {
         </Link>
       </div>
       
+      {!modal && <Link className={cx('text-link')} href={localizedPath(locale, '/services/web-development')}>
+        {t('webDevMore')} <Icon name="arrow-up-right" />
+      </Link>}
+
       <p className={cx('muted case-note')}>{t('caseNote')}</p>
     </div>
   )

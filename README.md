@@ -45,6 +45,7 @@ npm run dev
 | Что | Файл |
 | --- | --- |
 | Тексты EN/RU, услуги и FAQ | messages/en.json, messages/ru.json |
+| Страница услуги «Веб-разработка» (тексты — раздел `webDev`) | src/app/[locale]/services/web-development/page.tsx |
 | Названия, ссылки, вклад и результаты кейсов | src/content/projects.json |
 | Email, Telegram, имя, стек | src/lib/site.ts |
 | Цветовые переменные и базовые стили | src/styles/globals.css |

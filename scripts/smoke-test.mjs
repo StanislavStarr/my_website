@@ -43,6 +43,38 @@ for (const locale of ['en', 'ru']) {
   }
 }
 
+// Service pages: [path, text that must be present, whether it shows the real cases, directions that are not proven yet]
+const servicePages = [
+  ['/services/web-development', /React/, true, /Mini App|React Native|Telegram bot/i],
+  ['/services/mobile-apps', /React Native[\s\S]*Expo/, false, /Mini App|Telegram bot/i],
+  ['/services/seo-geo', /GEO/, false, /Mini App|React Native|Telegram bot/i]
+];
+for (const [servicePath, must, showsCases, banned] of servicePages) for (const locale of ['en', 'ru']) {
+  const route = (locale === 'ru' ? '/ru' : '') + servicePath;
+  const response = await fetch(base + route);
+  assert.equal(response.status, 200, route);
+  const html = await response.text();
+  const content = html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
+  assert.match(content, new RegExp('<html[^>]*lang="' + locale + '"'));
+  assert.equal((content.match(/<h1\b/g) || []).length, 1, route + ': one h1');
+  assert.match(content, must);
+  const caseLinks = /href="[^"]*\/work\/[a-z-]+"/.test(content);
+  assert.equal(caseLinks, showsCases, route + (showsCases ? ': links to the real cases' : ': no case links, there are no cases for this direction'));
+  assert.doesNotMatch(content, banned, route + ': no unproven directions');
+  assert.match(content, /https:\/\/t\.me\/stanislav_sinitsynn/);
+  const robotTag = content.match(/<meta[^>]*name="robots"[^>]*>/)?.[0] || '';
+  if (origin && process.env.ENABLE_INDEXING === 'true') {
+    assert.match(robotTag, /content="index, follow"/);
+    assert.ok(content.includes('href="' + origin + route + '"'), route + ': canonical URL');
+    assert.match(html, /application\/ld\+json/);
+    assert.doesNotMatch(html, /FAQPage/, route + ': no FAQPage on the service page');
+  } else {
+    assert.match(robotTag, /noindex/);
+  }
+  checks++;
+  console.log('PASS', route);
+}
+
 for (const path of ['/work/not-a-case', '/ru/work/not-a-case', '/missing-page', '/ru/missing-page']) {
   const response = await fetch(base + path);
   assert.equal(response.status, 404, path);
@@ -61,7 +93,7 @@ assert.match(robots, origin && process.env.ENABLE_INDEXING === 'true' ? /Allow: 
 const sitemap = await fetch(base + '/sitemap.xml');
 assert.equal(sitemap.status, 200);
 const xml = await sitemap.text();
-assert.equal((xml.match(/<loc>/g) || []).length, origin ? 10 : 0);
+assert.equal((xml.match(/<loc>/g) || []).length, origin ? 16 : 0);
 const image = await fetch(base + '/og-image');
 assert.equal(image.status, 200);
 assert.match(image.headers.get('content-type') || '', /image\/png/);

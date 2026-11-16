@@ -1,0 +1,283 @@
+{
+  "pillar": {
+    "title": "Главная: веб, мобильные и Telegram-разработка",
+    "keyword": "разработка сайтов и приложений на заказ",
+    "keywordEn": "web, mobile & telegram developer",
+    "volume": null,
+    "template": "landing-page",
+    "wordCount": 700,
+    "url": "/"
+  },
+  "clusters": [
+    {
+      "name": "Веб и SaaS",
+      "color": "#E5A353",
+      "posts": [
+        {
+          "title": "Разработка сайтов и веб-приложений (React / Next.js, SPA)",
+          "keyword": "разработка сайтов на заказ React Next.js",
+          "keywordEn": "Next.js React web development",
+          "volume": null,
+          "template": "landing-page",
+          "wordCount": 1100,
+          "url": "/services/web-development",
+          "status": "planned"
+        },
+        {
+          "title": "Разработка SaaS и MVP",
+          "keyword": "разработка SaaS платформы MVP",
+          "keywordEn": "SaaS MVP development",
+          "volume": null,
+          "template": "landing-page",
+          "wordCount": 1100,
+          "url": "/services/saas-mvp",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "name": "Telegram",
+      "color": "#6FBF73",
+      "posts": [
+        {
+          "title": "Разработка Telegram Mini Apps",
+          "keyword": "разработка Telegram Mini App на заказ",
+          "keywordEn": "Telegram Mini App development",
+          "volume": null,
+          "template": "landing-page",
+          "wordCount": 1100,
+          "url": "/services/telegram-mini-apps",
+          "status": "planned"
+        },
+        {
+          "title": "Разработка Telegram-ботов",
+          "keyword": "разработка Telegram бота под ключ",
+          "keywordEn": "Telegram bot development",
+          "volume": null,
+          "template": "landing-page",
+          "wordCount": 1000,
+          "url": "/services/telegram-bots",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "name": "Мобильные и PWA",
+      "color": "#6AA7E0",
+      "posts": [
+        {
+          "title": "Мобильные приложения на React Native + Expo",
+          "keyword": "разработка мобильных приложений React Native",
+          "keywordEn": "React Native app development",
+          "volume": null,
+          "template": "landing-page",
+          "wordCount": 1100,
+          "url": "/services/mobile-apps",
+          "status": "planned"
+        },
+        {
+          "title": "PWA-разработка",
+          "keyword": "PWA разработка (RU SERP не проверен)",
+          "keywordEn": "PWA development services",
+          "volume": null,
+          "template": "landing-page",
+          "wordCount": 900,
+          "url": "/services/pwa",
+          "status": "hypothesis"
+        }
+      ]
+    },
+    {
+      "name": "Поиск и ИИ",
+      "color": "#C97AD9",
+      "posts": [
+        {
+          "title": "SEO и GEO: настройка сайта для поиска и ИИ-ответов",
+          "keyword": "GEO оптимизация для нейросетей",
+          "keywordEn": "generative engine optimization services",
+          "volume": null,
+          "template": "explainer",
+          "wordCount": 1300,
+          "url": "/services/seo-geo",
+          "status": "planned"
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "from": "pillar",
+      "to": "cluster-0-post-0",
+      "type": "mandatory",
+      "anchor": "разработка сайтов на заказ React Next.js"
+    },
+    {
+      "from": "cluster-0-post-0",
+      "to": "pillar",
+      "type": "mandatory",
+      "anchor": "главная"
+    },
+    {
+      "from": "pillar",
+      "to": "cluster-0-post-1",
+      "type": "mandatory",
+      "anchor": "разработка SaaS платформы MVP"
+    },
+    {
+      "from": "cluster-0-post-1",
+      "to": "pillar",
+      "type": "mandatory",
+      "anchor": "главная"
+    },
+    {
+      "from": "pillar",
+      "to": "cluster-1-post-0",
+      "type": "mandatory",
+      "anchor": "разработка Telegram Mini App на заказ"
+    },
+    {
+      "from": "cluster-1-post-0",
+      "to": "pillar",
+      "type": "mandatory",
+      "anchor": "главная"
+    },
+    {
+      "from": "pillar",
+      "to": "cluster-1-post-1",
+      "type": "mandatory",
+      "anchor": "разработка Telegram бота под ключ"
+    },
+    {
+      "from": "cluster-1-post-1",
+      "to": "pillar",
+      "type": "mandatory",
+      "anchor": "главная"
+    },
+    {
+      "from": "pillar",
+      "to": "cluster-2-post-0",
+      "type": "mandatory",
+      "anchor": "разработка мобильных приложений React Native"
+    },
+    {
+      "from": "cluster-2-post-0",
+      "to": "pillar",
+      "type": "mandatory",
+      "anchor": "главная"
+    },
+    {
+      "from": "pillar",
+      "to": "cluster-2-post-1",
+      "type": "mandatory",
+      "anchor": "PWA разработка (RU SERP не проверен)"
+    },
+    {
+      "from": "cluster-2-post-1",
+      "to": "pillar",
+      "type": "mandatory",
+      "anchor": "главная"
+    },
+    {
+      "from": "pillar",
+      "to": "cluster-3-post-0",
+      "type": "mandatory",
+      "anchor": "GEO оптимизация для нейросетей"
+    },
+    {
+      "from": "cluster-3-post-0",
+      "to": "pillar",
+      "type": "mandatory",
+      "anchor": "главная"
+    },
+    {
+      "from": "cluster-0-post-0",
+      "to": "cluster-0-post-1",
+      "type": "recommended",
+      "anchor": "SaaS и MVP"
+    },
+    {
+      "from": "cluster-0-post-1",
+      "to": "cluster-0-post-0",
+      "type": "recommended",
+      "anchor": "веб-разработка"
+    },
+    {
+      "from": "cluster-1-post-0",
+      "to": "cluster-1-post-1",
+      "type": "recommended",
+      "anchor": "Telegram-боты"
+    },
+    {
+      "from": "cluster-1-post-1",
+      "to": "cluster-1-post-0",
+      "type": "recommended",
+      "anchor": "Telegram Mini Apps"
+    },
+    {
+      "from": "cluster-2-post-0",
+      "to": "cluster-2-post-1",
+      "type": "recommended",
+      "anchor": "PWA"
+    },
+    {
+      "from": "cluster-2-post-1",
+      "to": "cluster-2-post-0",
+      "type": "recommended",
+      "anchor": "мобильные приложения"
+    },
+    {
+      "from": "cluster-0-post-0",
+      "to": "cluster-2-post-1",
+      "type": "recommended",
+      "anchor": "PWA"
+    },
+    {
+      "from": "cluster-2-post-1",
+      "to": "cluster-0-post-0",
+      "type": "recommended",
+      "anchor": "веб-разработка"
+    },
+    {
+      "from": "cluster-1-post-0",
+      "to": "cluster-0-post-0",
+      "type": "recommended",
+      "anchor": "веб-разработка"
+    },
+    {
+      "from": "cluster-0-post-0",
+      "to": "cluster-1-post-0",
+      "type": "recommended",
+      "anchor": "Mini Apps"
+    },
+    {
+      "from": "cluster-1-post-0",
+      "to": "cluster-2-post-0",
+      "type": "recommended",
+      "anchor": "мобильные приложения"
+    },
+    {
+      "from": "cluster-2-post-0",
+      "to": "cluster-1-post-0",
+      "type": "recommended",
+      "anchor": "Mini Apps"
+    },
+    {
+      "from": "cluster-0-post-0",
+      "to": "cluster-3-post-0",
+      "type": "cross",
+      "anchor": "SEO и GEO"
+    },
+    {
+      "from": "cluster-3-post-0",
+      "to": "cluster-0-post-0",
+      "type": "cross",
+      "anchor": "веб-разработка"
+    }
+  ],
+  "meta": {
+    "totalPosts": 7,
+    "totalClusters": 4,
+    "totalLinks": 28,
+    "estimatedWords": 7600
+  }
+}

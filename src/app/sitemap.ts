@@ -12,7 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     const url = origin + localizedPath(locale, path);
     return url === origin + '/' ? origin : url;
   };
-  const paths = ['/', ...projects.map(({slug}) => '/work/' + slug)];
+  const paths = ['/', '/services/web-development', '/services/mobile-apps', '/services/seo-geo', ...projects.map(({slug}) => '/work/' + slug)];
   
   return paths.flatMap((path) => (['en', 'ru'] as const).map((locale) => ({
     url: absolute(locale, path),

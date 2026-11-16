@@ -73,16 +73,28 @@
 
 ## Фаза 3 — архитектура контента (C4, C5, H3)
 
-Сначала SERP-исследование (`/seo cluster`, `/seo sxo`) на RU и EN, затем
-страницы услуг по подтверждённому спросу. Предварительный набор (EN + RU):
+**Статус: SERP-исследование выполнено (16.11.2026), см. `CLUSTERS.md` и `SXO.md`.**
+Страницы услуг — по итогам исследования (EN + RU, одинаковые URL, RU с префиксом `/ru`):
 
-| URL | Тема |
-|-----|------|
-| `/services/web-development` | сайты, SPA, SaaS, личные кабинеты, фулстек |
-| `/services/mobile-apps` | React Native + Expo, iOS/Android |
-| `/services/telegram-mini-apps-and-bots` | Mini Apps и боты |
-| `/services/pwa` | PWA |
-| `/services/seo-geo` | настройка SEO и GEO |
+| Волна | URL | Тема |
+|-------|-----|------|
+| 1 | `/services/web-development` | сайты, SPA, личные кабинеты, фулстек |
+| 1 | `/services/telegram-mini-apps` | Telegram Mini Apps |
+| 1 | `/services/mobile-apps` | React Native + Expo, iOS/Android |
+| 2 | `/services/saas-mvp` | SaaS и MVP |
+| 2 | `/services/telegram-bots` | Telegram-боты (отдельно от Mini Apps: так устроена выдача) |
+| 2 | `/services/seo-geo` | объяснение GEO + услуга (RU-выдача информационная) |
+| 3 | `/services/pwa` | только если Search Console подтвердит спрос (RU-выдача не проверена) |
+
+**Сделано (16.11.2026):** страница `/services/web-development` (EN и RU) по `web-development-plan.md`: hero со стеком на LCD-панели, пять видов работ, общий блок кейсов, шаги, FAQ; ссылки с главной и со страниц кейсов; sitemap (12 URL); JSON-LD WebPage + BreadcrumbList + Service. Остальные страницы ждут примеров работ.
+
+**Сделано (16.11.2026):** страница `/services/mobile-apps` (EN и RU) на общем компоненте `ServicePage`, того же состава, **без блока кейсов** (опубликованных мобильных кейсов нет), стек: React Native, Expo, React, TypeScript, Node.js. Утверждения общие, без цен, условий и неподтверждённых результатов. Риск: без примеров работ страница слабее по доверию (E-E-A-T); добавить кейс, как только он появится. Sitemap: 14 URL.
+
+**Сделано (16.11.2026):** страница `/services/seo-geo` (EN и RU), тот же каркас, без блока кейсов (опубликованных результатов SEO/GEO нет). Панель «Инструменты»: robots.txt, Sitemap, Hreflang, Schema.org, JSON-LD, Search Console, Bing, Yandex. Первый вопрос FAQ «Что такое GEO?» (RU-выдача по теме объясняющая); явно сказано, что позиции и цитирование гарантировать нельзя. Sitemap: 16 URL. Проверить после деплоя в Search Console и повторить замер AI-ответов (см. Фазу 4).
+
+**Блокер Волны 1:** нужны реальные примеры работ по Mini Apps и React Native (демо,
+репозиторий, скриншоты, личный вклад). Без них страницы слабее конкурентов и нарушают
+принцип «без выдуманных клиентов и результатов».
 
 Правила: у каждой страницы уникальный интент и уникальный текст, свой FAQ из
 реальных вопросов клиентов, кейс-ссылки, CTA. Страницы «разработка в [стране]»

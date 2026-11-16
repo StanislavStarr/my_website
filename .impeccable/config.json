@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "gray-on-color",
+        "value": "*",
+        "files": [
+          "docs/seo/cluster-map.html"
+        ],
+        "createdAt": "2026-11-16T07:13:35.302Z",
+        "reason": "Confident false positive: #aaaaaa on #16213e is ~7:1 contrast (passes WCAG AA); internal docs artifact generated from the claude-seo plugin template, not shipped UI. Decided by assistant, not user confirmed."
+      }
+    ]
+  }
+}

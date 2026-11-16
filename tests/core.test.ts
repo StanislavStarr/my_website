@@ -117,7 +117,10 @@ test('robots and sitemap follow the indexing gate', async () => {
     assert.equal(open.rules.allow, '/');
     assert.equal(open.sitemap, 'https://example.com/sitemap.xml');
     const entries = sitemap();
-    assert.equal(entries.length, 10);
+    assert.equal(entries.length, 16);
+    assert.ok(entries.some((entry) => entry.url === 'https://example.com/ru/services/web-development'));
+    assert.ok(entries.some((entry) => entry.url === 'https://example.com/ru/services/mobile-apps'));
+    assert.ok(entries.some((entry) => entry.url === 'https://example.com/ru/services/seo-geo'));
     assert.equal(entries[0].url, 'https://example.com', 'root has no trailing slash, like the canonical tag');
     assert.ok(entries.every((entry) => entry.lastModified && entry.alternates?.languages));
     process.env.ENABLE_INDEXING = 'false';
@@ -126,4 +129,18 @@ test('robots and sitemap follow the indexing gate', async () => {
     if (saved.url === undefined) delete process.env.SITE_URL; else process.env.SITE_URL = saved.url;
     if (saved.on === undefined) delete process.env.ENABLE_INDEXING; else process.env.ENABLE_INDEXING = saved.on;
   }
+});
+
+test('service page graph has WebPage, breadcrumb and Service with its own URL, and no FAQPage', async () => {
+  const {buildGraph} = await import('../src/lib/structured-data.ts');
+  const graph = buildGraph({origin: 'https://example.com', locale: 'en',
+    servicePage: {path: '/services/web-development', name: 'Web development', description: 'Sites and apps'}})['@graph'] as Record<string, any>[];
+  const type = (t: string) => graph.filter((node) => node['@type'] === t);
+  const url = 'https://example.com/services/web-development';
+  assert.equal(type('FAQPage').length, 0);
+  assert.equal(type('Service').length, 1);
+  assert.equal(type('Service')[0].url, url);
+  assert.equal(type('WebPage')[0].mainEntity['@id'], url + '#service');
+  const crumbs = type('WebPage')[0].breadcrumb.itemListElement;
+  assert.deepEqual(crumbs.map((c: {item: string}) => c.item), ['https://example.com/', url]);
 });

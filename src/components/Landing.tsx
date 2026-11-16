@@ -6,7 +6,7 @@ import {MotionToggle} from './MotionToggle';
 import {Contact} from './Contact';
 import {Fx} from './Fx';
 import {StructuredData} from './StructuredData';
-import {projects} from '@/lib/projects';
+import {WorkScreen} from './WorkScreen';
 import {cx, rv} from '@/lib/styles';
 import {localizedPath, type Locale} from '@/lib/paths';
 import {site} from '@/lib/site';
@@ -78,21 +78,7 @@ export async function Landing({locale}: {locale: Locale}) {
             <h2 id="work-heading">{t('workHeading')}</h2><p>{rich('workIntro')}</p>
           </div>
 
-          <div className={cx('work-screen')}>
-            <div className={cx('screen-label mono')}><span>{t('workTable')}</span><span>{t('selectCase')} <Icon name="arrow-down-left" /></span></div>
-            {projects.map((project, index) => {
-              const copy = project[locale];
-              const [role, ...domain] = copy.listRole.split(' / ');
-              return <Link key={project.slug} href={localizedPath(locale, '/work/' + project.slug)}
-                {...rv('work-row', index + 1)} data-transition>
-                <span className={cx('mono')}>{String(index + 1).padStart(2, '0')}</span>
-                <span><span className={cx('work-title')}>{copy.title}</span><span className={cx('work-desc')}>{copy.short}</span></span>
-                <span className={cx('work-role mono')}>{role}<br />{domain.join(' / ')}</span>
-                <span className={cx('round-arrow')} aria-hidden="true"><Icon name="arrow-up-right" /></span>
-              </Link>;
-            })}
-            <p className={cx('work-note mono')}>{t('workNote')}</p>
-          </div>
+          <WorkScreen locale={locale} />
         </section>
 
         <section className={cx('section services')} id="services" aria-labelledby="services-heading">
@@ -102,7 +88,11 @@ export async function Landing({locale}: {locale: Locale}) {
 
           <div className={cx('service-list')}>
             {tags.map((tag, index) => <article {...rv('service', index)} key={tag}>
-              <div><h3>{t('s' + (index + 1))}</h3><p>{t('s' + (index + 1) + 'p')}</p><small>{tag}</small></div>
+              <div><h3>{t('s' + (index + 1))}</h3><p>{t('s' + (index + 1) + 'p')}</p>
+                {index === 1 && <Link className={cx('text-link service-more')} href={localizedPath(locale, '/services/web-development')}>{t('webDevMore')} <Icon name="arrow-up-right" /></Link>}
+                {index === 2 && <Link className={cx('text-link service-more')} href={localizedPath(locale, '/services/mobile-apps')}>{t('mobileMore')} <Icon name="arrow-up-right" /></Link>}
+                {index === 5 && <Link className={cx('text-link service-more')} href={localizedPath(locale, '/services/seo-geo')}>{t('seoGeoMore')} <Icon name="arrow-up-right" /></Link>}
+                <small>{tag}</small></div>
             </article>)}
           </div>
         </section>

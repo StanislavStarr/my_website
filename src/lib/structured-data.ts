@@ -10,9 +10,11 @@ const areaServed = () => [
   {'@type': 'Place', name: 'Worldwide (remote)'}
 ];
 
-export function buildGraph({origin, locale, project, faq, services = []}: {
+export type ServicePage = {path: string; name: string; description: string};
+
+export function buildGraph({origin, locale, project, faq, services = [], servicePage}: {
   origin: string; locale: Locale; project?: Project;
-  faq?: {q: string; a: string}[]; services?: ServiceItem[];
+  faq?: {q: string; a: string}[]; services?: ServiceItem[]; servicePage?: ServicePage;
 }) {
   const personId = origin + '/#person';
   const name = site.names[locale];
@@ -55,7 +57,32 @@ export function buildGraph({origin, locale, project, faq, services = []}: {
     }
   ];
 
-  if (project) {
+  if (servicePage) {
+    const url = origin + localizedPath(locale, servicePage.path);
+    graph.push({
+      '@type': 'WebPage',
+      '@id': url + '#webpage',
+      name: servicePage.name + ' — ' + name,
+      description: servicePage.description,
+      url,
+      inLanguage: locale,
+      isPartOf: {'@id': origin + '/#website'},
+      breadcrumb: {'@type': 'BreadcrumbList', itemListElement: [
+        {'@type': 'ListItem', position: 1, name, item: origin + localizedPath(locale)},
+        {'@type': 'ListItem', position: 2, name: servicePage.name, item: url}
+      ]},
+      mainEntity: {'@id': url + '#service'}
+    }, {
+      '@type': 'Service',
+      '@id': url + '#service',
+      name: servicePage.name,
+      description: servicePage.description,
+      inLanguage: locale,
+      provider: {'@id': personId},
+      areaServed: areaServed(),
+      url
+    });
+  } else if (project) {
     const copy = project[locale];
     graph.push({
       '@type': 'WebPage',

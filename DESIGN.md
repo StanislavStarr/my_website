@@ -23,3 +23,7 @@ Boot overlay, word-by-word headline reveal, scroll reveals, count-up proof numbe
 
 ## SEO / GEO
 Person + ProfessionalService (areaServed named countries (RU/CIS, US) + Europe + remote worldwide, knowsLanguage ru/en) + WebSite + Service list + FAQPage on the landing; WebPage + BreadcrumbList on cases; hreflang en/ru/x-default; indexing gated by SITE_URL + ENABLE_INDEXING.
+
+## Service pages (`/services/web-development`, `/services/mobile-apps`, `/services/seo-geo`)
+Persuade surface built from the same parts as the landing: breadcrumb, hero with the real stack on an LCD panel inside the console shell (data, not decoration), hairline editorial list of work types with a sticky heading, the shared `WorkScreen` case table, numbered process steps, FAQ, `Contact`. No price, term or guarantee claims; only real cases. JSON-LD: WebPage + BreadcrumbList + Service; no FAQPage. Long RU case titles hyphenate (`hyphens:auto`) instead of breaking mid-word.
+Both pages render through `src/components/ServicePage.tsx`; the case table is optional (`showCases`) and stays off where there are no real cases (mobile, SEO/GEO).
